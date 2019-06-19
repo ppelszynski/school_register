@@ -7,6 +7,7 @@ feature 'User sign in', type: :feature do
 
     fill_in 'Email', with: 'user@example.com'
     fill_in 'Password', with: 'password'
+    select "Public", :from => "statusSelect"
 
     click_button 'Log in'
 
