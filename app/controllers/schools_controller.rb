@@ -32,10 +32,10 @@ class SchoolsController < ApplicationController
   end
 
   def destroy
-    if @school.update(school_params)
+    if @school.destroy!
       redirect_to schools_path
     else
-      render :edit
+      render :show
     end
   end
 
