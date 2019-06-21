@@ -7,8 +7,6 @@ ruby '2.6.3'
 
 gem 'rubocop', require: false
 
-gem 'capybara'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 # Use postgresql as the database for Active Record
@@ -44,6 +42,8 @@ gem 'bootsnap', '~> 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'capybara'
+  gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'rspec-rails'
 end
