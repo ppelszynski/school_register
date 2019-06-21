@@ -7,10 +7,6 @@ ruby '2.6.3'
 
 gem 'rubocop', require: false
 
-gem 'capybara'
-
-gem 'factory_bot_rails'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
 # Use postgresql as the database for Active Record
