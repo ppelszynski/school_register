@@ -1,4 +1,6 @@
-class CoursesController < ApplicationController
+class SchoolsController < ApplicationController
+  before_action :get_school, only: %i[show edit update destroy]
+
   def new
     @school = School.new
   end
@@ -17,13 +19,11 @@ class CoursesController < ApplicationController
     @schools = current_user.schools
   end
 
-  def show
-    @school = current_user.schools.find(school_id)
-  end
+  def show; end
+
+  def edit; end
 
   def update
-    @school = current_user.schools.find(school_id)
-
     if @school.update(school_params)
       redirect_to @school
     else
@@ -32,8 +32,6 @@ class CoursesController < ApplicationController
   end
 
   def destroy
-    @school = current_user.schools.find(school_id)
-
     if @school.update(school_params)
       redirect_to schools_path
     else
@@ -42,6 +40,10 @@ class CoursesController < ApplicationController
   end
 
   private
+
+  def get_school
+    @school = current_user.schools.find(school_id)
+  end
 
   def school_id
     params[:id]

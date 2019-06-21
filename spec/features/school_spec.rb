@@ -35,19 +35,20 @@ feature 'schools', type: :feature do
 
     scenario 'can edit own school' do
       user = create(:user)
+      school = create(:school, name: 'New School' admin_id: user.id)
 
       sign_in user
 
-      visit new_school_path
+      visit edit_school_path school
 
       fill_in 'Name', with: 'Last School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
       select 'Public', from: 'statusSelect'
 
-      click_button 'Create school'
+      click_button 'Update school'
 
-      expect(School.last.name).to eq 'Last School'
+      expect(school.last.name).to eq 'Last School'
     end
 
     scenario 'can delete own school' do
