@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 2019_06_19_114036) do
   enable_extension "plpgsql"
 
   create_table "schools", force: :cascade do |t|
-    t.string "name"
-    t.string "adress"
-    t.string "phone_number"
-    t.string "status"
-    t.boolean "is_closed"
-    t.bigint "admin_id"
+    t.string "name", default: "", null: false
+    t.string "adress", default: "", null: false
+    t.string "phone_number", default: "", null: false
+    t.string "status", default: "", null: false
+    t.boolean "is_closed", default: false, null: false
+    t.bigint "admin_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_schools_on_admin_id"
