@@ -5,6 +5,5 @@ FactoryBot.define do
     phone_number { '123456789' }
     status { 'public' }
     closed { false }
-    # association :admin, factory: :user
   end
 end

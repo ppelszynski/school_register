@@ -9,14 +9,14 @@ feature 'schools', type: :feature do
 
       visit new_school_path
 
-      fill_in 'Name', with: 'Last School'
+      fill_in 'Name', with: 'New School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
-      select 'Public', from: 'statusSelect'
+      select 'Public', from: 'school[status]'
 
       click_button 'Create school'
 
-      expect(School.last.name).to eq 'Last School'
+      expect(page).to have_css('h1', text: 'New School')
     end
 
     scenario 'sees his own schools' do
@@ -35,37 +35,33 @@ feature 'schools', type: :feature do
 
     scenario 'can edit own school' do
       user = create(:user)
-      school = create(:school, name: 'New School' admin_id: user.id)
+      school = create(:school, name: 'New School', admin_id: user.id)
 
       sign_in user
 
       visit edit_school_path school
 
-      fill_in 'Name', with: 'Last School'
+      fill_in 'Name', with: 'Edited School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
-      select 'Public', from: 'statusSelect'
+      select 'Public', from: 'school[status]'
 
       click_button 'Update school'
 
-      expect(school.last.name).to eq 'Last School'
+      expect(page).to have_css('h1', text: 'Edited School')
     end
 
     scenario 'can delete own school' do
       user = create(:user)
+      school = create(:school, name: 'Falling School', admin_id: user.id)
 
       sign_in user
 
-      visit new_school_path
+      visit school_path school
 
-      fill_in 'Name', with: 'Last School'
-      fill_in 'Adress', with: 'City 1'
-      fill_in 'Phone number', with: '123456789'
-      select 'Public', from: 'statusSelect'
+      click_link 'Delete'
 
-      click_button 'Create school'
-
-      expect(School.last.name).to eq 'Last School'
+      expect(page).not_to have_css('h1', text: 'Falling School')
     end
   end
 end
