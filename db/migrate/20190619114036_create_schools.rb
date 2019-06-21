@@ -5,7 +5,8 @@ class CreateSchools < ActiveRecord::Migration[5.2]
       t.string :adress
       t.string :phone_number
       t.string :status
-      t.boolean :closed
+      t.boolean :is_closed
+      t.references :admin
 
       t.timestamps
     end

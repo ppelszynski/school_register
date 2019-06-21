@@ -1,39 +1,103 @@
 require 'rails_helper'
 
-feature 'User can manage schools', type: :feature do
-  context 'User creates schools' do
-    let(:user) { create(:user) }
-    let(:name) { 'Last School' }
+feature 'schools', type: :feature do
+  context 'user is an superuser' do
+    scenario 'can create school' do
+      user = create(:user)
 
-    scenario 'correctly creates school' do
       sign_in user
 
       visit new_school_path
 
-      fill_in 'Name', with: name
+      fill_in 'Name', with: 'Last School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
       select 'Public', from: 'statusSelect'
 
       click_button 'Create school'
 
-      expect(School.last.name).to eq name
+      expect(School.last.name).to eq 'Last School'
     end
-  end
-
-  context 'User sees schools', type: :feature do
-    let(:user_1) { create(:user) }
-    let(:user_2) { create(:user, email: "another@email.com") }
-    let(:school_1) { create(:school), admin: user_1) }
-    let(:school_2) { create(:school), admin: user_2) }
 
     scenario 'sees his own schools' do
+      user_1 = create(:user)
+      user_2 = create(:user, email: 'another@email.com')
+      school_1 = create(:school, admin_id: user_1.id)
+      school_2 = create(:school, admin_id: user_2.id)
+
       sign_in user_1
 
       visit schools_path
 
-      expect(page).to have_css('*', text: school_1.name) 
-      expect(page).not_to have_css('*', text: school_2.name) 
+      expect(page).to have_css('*', text: school_1.name)
+      expect(page).not_to have_css('*', text: school_2.name)
+    end
+
+    scenario 'can edit own school' do
+      user = create(:user)
+
+      sign_in user
+
+      visit new_school_path
+
+      fill_in 'Name', with: 'Last School'
+      fill_in 'Adress', with: 'City 1'
+      fill_in 'Phone number', with: '123456789'
+      select 'Public', from: 'statusSelect'
+
+      click_button 'Create school'
+
+      expect(School.last.name).to eq 'Last School'
+    end
+
+    scenario 'can delete own school' do
+      user = create(:user)
+
+      sign_in user
+
+      visit new_school_path
+
+      fill_in 'Name', with: 'Last School'
+      fill_in 'Adress', with: 'City 1'
+      fill_in 'Phone number', with: '123456789'
+      select 'Public', from: 'statusSelect'
+
+      click_button 'Create school'
+
+      expect(School.last.name).to eq 'Last School'
     end
   end
 end
+
+# feature 'schools' do
+#   context 'when user is an admin' do
+#   end
+
+#   context 'when user is not an admin' do
+#     scenario 'user can see own schools' do
+#       visit root_path
+#     end
+
+#     scenario 'user can create a new schoool' do
+#     end
+
+#     scenario "user can't close school during school year" do
+#     end
+#   end
+# end
+
+# describe SchoolController do
+#   describe '#CREATE' do
+#     context 'when user is an admin' do
+#       it 'can create a new school' do
+
+#       end
+#     end
+
+#     context 'when user is a student' do
+#       it 'cannot create a new school' do
+
+#       end
+#     end
+#   end
+# end
