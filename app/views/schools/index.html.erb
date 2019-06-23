@@ -1,4 +1,4 @@
-<table border="1">
+<table class = "table">
   <tr>
     <th>Name</th>
     <th>Adress</th> 
@@ -11,6 +11,7 @@
   <% end %>
 </table>
 
-<%=link_to 'Add school', new_school_path%>
-
+<div class="btn btn-outline-dark">
+   <%=link_to 'Add school', new_school_path, class: 'btn'%>
+</div>
 

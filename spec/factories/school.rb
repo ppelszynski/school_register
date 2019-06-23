@@ -4,6 +4,6 @@ FactoryBot.define do
     sequence(:adress) { |n| "City #{n}" }
     phone_number { '123456789' }
     status { 'public' }
-    closed { false }
+    is_closed { false }
   end
 end
