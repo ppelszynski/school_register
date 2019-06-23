@@ -31,6 +31,10 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem "rolify"
+
+gem "pundit"
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'bootstrap', '~> 4.3.1'
@@ -64,12 +68,5 @@ group :test do
   gem 'database_cleaner'
 end
 
-<<<<<<< HEAD
-group :test do
-  gem 'database_cleaner'
-end
-
-=======
->>>>>>> 40174990700a7dd90103a7ddbea19d673e932110
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
