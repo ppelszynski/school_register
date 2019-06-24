@@ -109,8 +109,8 @@ feature 'schools' do
       end
 
       scenario 'can delete own school' do
-        user = create(:user, :school_admin)
-        school = create(:school, name: 'Falling School', admin_id: user.id)
+        user = create(:user)
+        school = create_school(owner: user, name: 'Falling School')
 
         sign_in user
 
