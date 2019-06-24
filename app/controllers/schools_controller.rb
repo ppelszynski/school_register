@@ -7,7 +7,7 @@ class SchoolsController < ApplicationController
 
   def create
     @school = current_user.schools.new(school_params)
-
+    authorize @school
     if @school.save!
       redirect_to @school
     else
@@ -16,7 +16,11 @@ class SchoolsController < ApplicationController
   end
 
   def index
-    @schools = current_user.schools
+    @schools = if current_user.is_admin?
+                 School.all
+               else
+                 current_user.schools
+               end
   end
 
   def show; end
@@ -24,6 +28,7 @@ class SchoolsController < ApplicationController
   def edit; end
 
   def update
+    authorize @school
     if @school.update(school_params)
       redirect_to @school
     else
@@ -32,6 +37,7 @@ class SchoolsController < ApplicationController
   end
 
   def destroy
+    authorize @school
     if @school.destroy!
       redirect_to schools_path
     else
@@ -42,7 +48,11 @@ class SchoolsController < ApplicationController
   private
 
   def get_school
-    @school = current_user.schools.find(school_id)
+    @school ||= if current_user.is_admin?
+                  School.find(school_id)
+                else
+                  current_user.schools.find(school_id)
+                end
   end
 
   def school_id

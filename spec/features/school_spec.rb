@@ -136,7 +136,6 @@ feature 'schools', type: :feature do
 
         visit edit_school_path school
 
-        expect(response).to redirect_to(root_path)
         expect(page).to have_css('*', text: 'You are not authorized to edit this school!')
       end
 
