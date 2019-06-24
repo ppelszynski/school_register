@@ -1,13 +1,15 @@
 require 'rails_helper'
 
-feature 'schools', type: :feature do
+feature 'schools' do
   context 'user is an admin' do
     scenario 'can create school' do
       admin = create(:user, :admin)
 
       sign_in admin
 
-      visit new_school_path
+      visit schools_path
+
+      click_on 'Add school'
 
       fill_in 'Name', with: 'New School'
       fill_in 'Adress', with: 'City 1'
@@ -40,7 +42,9 @@ feature 'schools', type: :feature do
 
       sign_in admin
 
-      visit edit_school_path school
+      visit school_path school
+
+      click_link 'Edit'
 
       fill_in 'Name', with: 'Edited School'
       fill_in 'Adress', with: 'City 1'
@@ -90,7 +94,9 @@ feature 'schools', type: :feature do
 
         sign_in user
 
-        visit edit_school_path school
+        visit school_path school
+
+        click_link 'Edit'
 
         fill_in 'Name', with: 'Edited School'
         fill_in 'Adress', with: 'City 1'

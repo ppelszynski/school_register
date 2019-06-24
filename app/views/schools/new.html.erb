@@ -1,28 +1,5 @@
 <h2>New school</h2>
 
 <%= form_for(@school, url: schools_path) do |f| %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.number_field :phone_number, autofocus: true, autocomplete: "phone_number" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :adress %><br />
-    <%= f.text_field :adress, autofocus: true, autocomplete: "adress" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.select :status, [['Public', 'public'], ['Private', 'private']] %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Create school" %>
-  </div>
+  <%= render 'form', f: f %>
 <% end %>
