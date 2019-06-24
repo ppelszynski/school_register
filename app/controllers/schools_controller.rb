@@ -1,6 +1,8 @@
 class SchoolsController < ApplicationController
   before_action :get_school, only: %i[show edit update destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
+
   def new
     @school = School.new
   end
@@ -9,7 +11,8 @@ class SchoolsController < ApplicationController
     @school = current_user.schools.new(school_params)
     authorize @school
     if @school.save!
-      redirect_to @school
+      current_user.add_role(:school_admin, @school)
+      redirect_to schools_path
     else
       render :new
     end
@@ -46,6 +49,11 @@ class SchoolsController < ApplicationController
   end
 
   private
+
+  def handle_not_found
+    flash[:error] = 'You are not authorized to do this!'
+    redirect_to root_path
+  end
 
   def get_school
     @school ||= if current_user.is_admin?

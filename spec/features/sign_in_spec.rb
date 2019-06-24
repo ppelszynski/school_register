@@ -12,5 +12,6 @@ feature 'User sign in', type: :feature do
     click_button 'Log in'
 
     expect(current_path).to eq root_path
+    expect(page).to show_notification('Signed in successfully.')
   end
 end
