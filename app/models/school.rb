@@ -6,6 +6,7 @@ class School < ApplicationRecord
   STATUSES = [PUBLIC, PRIVATE].freeze
 
   validates :status, inclusion: { in: STATUSES }
+  validates :name, length: { minimum: 2 }
 
   resourcify
 end

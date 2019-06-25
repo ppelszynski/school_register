@@ -68,6 +68,8 @@ feature 'schools' do
 
       click_link 'Delete'
 
+      page.driver.browser.switch_to.alert.accept
+
       expect(page).not_to have_css('h1', text: 'Falling School')
     end
   end
@@ -94,12 +96,11 @@ feature 'schools' do
     end
 
     scenario 'sees only own schools' do
-      user_1 = create(:user, :school_admin)
-      user_2 = create(:user, email: 'another@email.com')
-      school_1 = create(:school, name: 'School 1', admin_id: user_1.id)
-      school_2 = create(:school, name: 'School 2', admin_id: user_2.id)
+      user = create(:user, :school_admin)
+      create(:school, name: 'School 1', admin: user)
+      create(:school, name: 'School 2')
 
-      sign_in user_1
+      sign_in user
 
       visit schools_path
 
@@ -159,6 +160,8 @@ feature 'schools' do
       visit school_path school
 
       click_link 'Delete'
+
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).not_to have_css('h1', text: 'Falling School')
     end

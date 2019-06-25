@@ -5,12 +5,12 @@ describe SchoolsController, type: :controller do
     context 'when user is an admin' do
       it 'can create a new school' do
         admin = create(:user, :admin)
-        params = { school: { name: 'My new school', phone_number: '123456789', adress: 'City 1' } }
+        params = { school: { name: 'New school', status: 'public', phone_number: '123456789', adress: 'City 1' } }
 
         sign_in admin
 
         expect { post :create, params: params }.to change { admin.schools.count }.by 1
-        expect(admin.schools.last).to have_attributes(name: 'My new school', phone_number: '123456789', adress: 'City 1')
+        expect(admin.schools.last).to have_attributes(name: 'New school', phone_number: '123456789', adress: 'City 1')
       end
     end
   end

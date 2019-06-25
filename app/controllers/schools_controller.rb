@@ -10,7 +10,7 @@ class SchoolsController < ApplicationController
   def create
     @school = current_user.schools.new(school_params)
     authorize @school
-    if @school.save!
+    if @school.save
       current_user.add_role(:school_admin, @school)
       flash[:success] = 'School created.'
       redirect_to schools_path
@@ -43,7 +43,7 @@ class SchoolsController < ApplicationController
 
   def destroy
     authorize @school
-    if @school.destroy!
+    if @school.destroy
       redirect_to schools_path
     else
       render :show

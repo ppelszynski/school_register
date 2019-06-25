@@ -79,6 +79,8 @@ RSpec.configure do |config|
     end
   end
 
+  Capybara.default_driver = :selenium_chrome_headless
+
   config.before(:each) do
     DatabaseCleaner.start
   end

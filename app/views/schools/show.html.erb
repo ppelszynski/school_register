@@ -1,4 +1,4 @@
 <h1><%= @school.name %></h1>
 
 <%= link_to 'Edit', edit_school_path %>
-<%= link_to 'Delete', school_path, method: 'DELETE'  %>
+<%= link_to 'Delete', school_path, method: :delete, data: { confirm: 'Are you sure?' }  %>
