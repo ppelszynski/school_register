@@ -4,8 +4,10 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
 
-    transient do 
-      school {nil}
+    after(:create, &:confirm)
+
+    transient do
+      school { nil }
     end
 
     trait :admin do
