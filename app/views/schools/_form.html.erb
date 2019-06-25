@@ -9,13 +9,13 @@
 </div>
 
 <div class="field">
-  <%= f.label :adress %><br />
+  <%= f.label :adress %><br/>
   <%= f.text_field :adress, autofocus: true, autocomplete: "adress" %>
 </div>
 
 <div class="field">
   <%= f.label :status %><br />
-  <%= f.select :status, [['Public', School::PUBLIC], ['Private', School::PRIVATE]] %>
+  <%= f.select :status, School::STATUSES %>
 </div>
 
 <div class="actions">

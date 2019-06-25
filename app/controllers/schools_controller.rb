@@ -12,6 +12,7 @@ class SchoolsController < ApplicationController
     authorize @school
     if @school.save!
       current_user.add_role(:school_admin, @school)
+      flash[:success] = 'School created.'
       redirect_to schools_path
     else
       render :new
@@ -33,6 +34,7 @@ class SchoolsController < ApplicationController
   def update
     authorize @school
     if @school.update(school_params)
+      flash[:success] = 'Edited succesfully.'
       redirect_to @school
     else
       render :edit

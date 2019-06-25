@@ -5,5 +5,10 @@ FactoryBot.define do
     phone_number { '123456789' }
     status { 'public' }
     is_closed { false }
+    admin { create(:user) }
+
+    after(:create) do |school|
+      school.admin.add_role(:school_admin, school)
+    end
   end
 end

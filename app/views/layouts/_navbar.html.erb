@@ -3,6 +3,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <%= link_to 'School register', root_path, :class => "navbar-brand" %>
+  <%= link_to 'Schools', schools_path if current_user%>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">

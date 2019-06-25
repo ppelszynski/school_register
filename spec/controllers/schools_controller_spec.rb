@@ -19,12 +19,12 @@ describe SchoolsController, type: :controller do
     context 'when user is a school admin' do
       it 'cannot edit not own school' do
         user = create(:user)
-        neighbours_school = create(:school, admin_id: 0)
+        neighbours_school = create(:school)
         params = { id: neighbours_school.id, school: { name: 'My new school', phone_number: '123456789', adress: 'City 1', status: 'public' } }
 
         sign_in user
 
-        expect { patch(:update, params: params).not_to change { neighbours_school.name } }
+        expect { patch(:update, params: params).not_to change { neighbours_school.reload.name } }
       end
     end
   end
@@ -33,7 +33,7 @@ describe SchoolsController, type: :controller do
     context 'when user is a school admin' do
       it 'cannot delete not own school' do
         user = create(:user)
-        neighbours_school = create(:school, admin_id: 0)
+        neighbours_school = create(:school)
 
         sign_in user
 

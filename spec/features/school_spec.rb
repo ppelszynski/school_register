@@ -14,18 +14,18 @@ feature 'schools' do
       fill_in 'Name', with: 'New School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
-      select 'Public', from: 'school[status]'
+      select 'public', from: 'school[status]'
 
       click_button 'Create school'
 
       expect(page).to have_table_row('New School')
+      expect(page).to show_notification('School created.')
     end
 
     scenario 'sees all schools' do
       admin = create(:user, :admin)
-      user = create(:user, email: 'another@email.com')
-      school_1 = create(:school, name: 'School 1', admin_id: admin.id)
-      school_2 = create(:school, name: 'School 2', admin_id: user.id)
+      create(:school, name: 'School 1', admin: admin)
+      create(:school, name: 'School 2')
 
       sign_in admin
 
@@ -49,7 +49,7 @@ feature 'schools' do
       fill_in 'Name', with: 'Edited School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
-      select 'Public', from: 'school[status]'
+      select 'public', from: 'school[status]'
 
       click_button 'Update school'
 
@@ -73,80 +73,94 @@ feature 'schools' do
   end
 
   context 'user is a school admin' do
-    context 'with own schools he' do
-      scenario 'sees schools' do
-        user_1 = create(:user, :school_admin)
-        user_2 = create(:user, email: 'another@email.com')
-        school_1 = create(:school, name: 'School 1', admin_id: user_1.id)
-        school_2 = create(:school, name: 'School 2', admin_id: user_2.id)
+    scenario 'can create school' do
+      user = create(:user, :school_admin)
 
-        sign_in user_1
+      sign_in user
 
-        visit schools_path
+      visit schools_path
 
-        expect(page).to have_table_row('School 1')
-        expect(page).not_to have_table_row('School 2')
-      end
+      click_on 'Add school'
 
-      scenario 'can edit own school' do
-        user = create(:user, :school_admin)
-        school = create(:school, name: 'New School', admin_id: user.id)
+      fill_in 'Name', with: 'My School'
+      fill_in 'Adress', with: 'City 1'
+      fill_in 'Phone number', with: '123456789'
+      select 'public', from: 'school[status]'
 
-        sign_in user
+      click_button 'Create school'
 
-        visit school_path school
-
-        click_link 'Edit'
-
-        fill_in 'Name', with: 'Edited School'
-        fill_in 'Adress', with: 'City 1'
-        fill_in 'Phone number', with: '123456789'
-        select 'Public', from: 'school[status]'
-
-        click_button 'Update school'
-
-        expect(page).to have_css('h1', text: 'Edited School')
-      end
-
-      scenario 'can delete own school' do
-        user = create(:user)
-        school = create_school(owner: user, name: 'Falling School')
-
-        sign_in user
-
-        visit school_path school
-
-        click_link 'Delete'
-
-        expect(page).not_to have_css('h1', text: 'Falling School')
-      end
+      expect(page).to have_table_row('My School')
+      expect(page).to show_notification('School created.')
     end
 
-    context 'with other schools' do
-      scenario "can not edit someone else's school" do
-        user_1 = create(:user, :school_admin)
-        user_2 = create(:user)
-        school = create(:school, name: 'Not mine School', admin_id: user_2.id)
+    scenario 'sees only own schools' do
+      user_1 = create(:user, :school_admin)
+      user_2 = create(:user, email: 'another@email.com')
+      school_1 = create(:school, name: 'School 1', admin_id: user_1.id)
+      school_2 = create(:school, name: 'School 2', admin_id: user_2.id)
 
-        sign_in user_1
+      sign_in user_1
 
-        visit edit_school_path school
+      visit schools_path
 
-        expect(page).to show_notification('You are not authorized to do this!')
-      end
+      expect(page).to have_table_row('School 1')
+      expect(page).not_to have_table_row('School 2')
+    end
 
-      scenario "can't' show someone else's school" do
-        user_1 = create(:user, :school_admin)
-        user_2 = create(:user)
+    scenario 'can show only own school' do
+      user = create(:user, :school_admin)
 
-        school = create(:school, name: "Neighbour's School", admin_id: user_2.id)
+      school_1 = create(:school, name: 'Own School', admin: user)
+      school_2 = create(:school)
 
-        sign_in user_1
+      sign_in user
 
-        visit school_path school
+      visit school_path school_1
 
-        expect(page).to show_notification('You are not authorized to do this!')
-      end
+      expect(page).to have_css('h1', text: 'Own School')
+
+      visit school_path school_2
+
+      expect(page).to show_notification('You are not authorized to do this!')
+    end
+
+    scenario 'can edit own school' do
+      user = create(:user, :school_admin)
+      school_1 = create(:school, name: 'New School', admin_id: user.id)
+      school_2 = create(:school)
+
+      sign_in user
+
+      visit school_path school_1
+
+      click_link 'Edit'
+
+      fill_in 'Name', with: 'Edited School'
+      fill_in 'Adress', with: 'City 1'
+      fill_in 'Phone number', with: '123456789'
+      select 'public', from: 'school[status]'
+
+      click_button 'Update school'
+
+      expect(page).to have_css('h1', text: 'Edited School')
+      expect(page).to show_notification('Edited succesfully.')
+
+      visit edit_school_path school_2
+
+      expect(page).to show_notification('You are not authorized to do this!')
+    end
+
+    scenario 'can delete own school' do
+      user = create(:user)
+      school = create(:school, admin: user)
+
+      sign_in user
+
+      visit school_path school
+
+      click_link 'Delete'
+
+      expect(page).not_to have_css('h1', text: 'Falling School')
     end
   end
 end
