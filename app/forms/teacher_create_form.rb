@@ -20,6 +20,7 @@ class TeacherCreateForm < Patterns::Form
   end
 
   def create_teacher
+    resource.skip_confirmation!
     resource.update_attributes(attributes)
   end
 end

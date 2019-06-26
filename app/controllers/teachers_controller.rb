@@ -7,15 +7,18 @@ class TeachersController < ApplicationController
     @form = TeacherCreateForm.new
   end
 
-  def create
+  def create # to jebnie
     set_password
 
     @form = TeacherCreateForm.new(User.new, params[:user])
 
     if @form.save
+      teacher = @form.teacher
+      teacher.confirmed_at = nil
+
+      teacher.add_role(:teacher, school)
       flash[:success] = 'Invitation sent.'
       redirect_to school_teachers_path
-      @form.teacher.add_role(:teacher, school)
     else
       flash.now[:error] = 'Invitation not sent.'
       render :new
