@@ -1,0 +1,23 @@
+<table class = "table">
+  <tr>
+    <th>Email</th>
+    <th>Confirmed?</th> 
+  </tr>
+  <% @teachers.each do |teacher| %>
+    <tr>
+      <td><%= teacher.email %></td>
+      <td>
+      <% if teacher.confirmed? %>
+        <%= 'confirmed' %>
+      <% else %>
+        <%= 'unconfirmed' %>
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="btn btn-outline-dark">
+   <%=link_to 'Add teachers', new_school_teacher_path, class: 'btn'%>
+</div>
+

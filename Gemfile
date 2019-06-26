@@ -50,9 +50,10 @@ gem 'jquery-rails'
 gem 'bootsnap', '~> 1.4.4', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'letter_opener'
+  gem 'mailcatcher'
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
