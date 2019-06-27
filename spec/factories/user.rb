@@ -20,5 +20,12 @@ FactoryBot.define do
         user.add_role(:school_admin, evaluator.school) if evaluator.school
       end
     end
+
+    trait :teacher do
+      after(:create) do |user, evaluator|
+        user.add_role(:school_admin)
+        user.add_role(:teacher, evaluator.school) if evaluator.school
+      end
+    end
   end
 end

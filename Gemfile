@@ -43,17 +43,18 @@ gem 'bootstrap', '~> 4.3.1'
 
 gem 'jquery-rails'
 
+gem 'aes'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'config'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '~> 1.4.4', require: false
 
 group :development, :test do
   gem 'capybara'
+  gem 'capybara-email'
   gem 'factory_bot_rails'
-  gem 'letter_opener'
-  gem 'mailcatcher'
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'selenium-webdriver'

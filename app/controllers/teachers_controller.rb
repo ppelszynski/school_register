@@ -7,21 +7,24 @@ class TeachersController < ApplicationController
     @form = TeacherCreateForm.new
   end
 
-  def create # to jebnie
+  def create
     set_password
 
     @form = TeacherCreateForm.new(User.new, params[:user])
+    teacher = @form.teacher
 
-    if @form.save
-      teacher = @form.teacher
-      teacher.confirmed_at = nil
+    User.transaction do
+      if @form.save && SendEmailJob.perform_now(teacher, school)
+        teacher.confirmed_at = nil
 
-      teacher.add_role(:teacher, school)
-      flash[:success] = 'Invitation sent.'
-      redirect_to school_teachers_path
-    else
-      flash.now[:error] = 'Invitation not sent.'
-      render :new
+        teacher.add_role(:teacher, school)
+
+        flash[:success] = 'Invitation sent.'
+        redirect_to school_teachers_path
+      else
+        flash.now[:error] = 'Invitation not sent.'
+        render :new
+      end
     end
   end
 
