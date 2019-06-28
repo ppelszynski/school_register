@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      <%= link_to 'Confirm your email.', "localhost:3000/schools/#{@school_id}/teachers/confirmations/#{encrypt_email(@email)}" %>
+    </p>
+  </body>
+</html>
