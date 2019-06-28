@@ -1,0 +1,5 @@
+<h2>Edit school</h2>
+
+<%= form_for(@school, url: school_path) do |f| %>
+  <%= render 'form', f: f, action: 'Update' %>
+<% end %>

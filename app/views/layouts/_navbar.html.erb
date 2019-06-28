@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <%= link_to 'School register', root_path, :class => "navbar-brand" %>
+  <%= link_to 'Schools', schools_path if current_user%>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <% if !current_user %>
+        <%= link_to 'Sign up', new_user_registration_path, :class => "mr-sm-2" %>
+        <%= link_to 'Log in', new_user_session_path, :class => "mr-sm-2" %>
+      <% else %>
+        <%= link_to 'Log out', destroy_user_session_path, method: :delete, :class => "mr-sm-2" %>
+      <% end %>
+    </form>
+  </div>
+</nav>

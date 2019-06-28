@@ -31,6 +31,12 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'rails-patterns'
+
+gem 'rolify'
+
+gem 'pundit'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'bootstrap', '~> 4.3.1'
@@ -49,6 +55,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'rspec-rails'
+  gem 'selenium-webdriver'
 end
 
 group :development do
