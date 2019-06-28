@@ -10,10 +10,9 @@ class DecryptEmail < Patterns::Service
 
   private
 
-  def decrypt(token)
-    plain = Base64.decode64(token)
-    plain
-  end
-
   attr_reader :token
+
+  def decrypt(token)
+    token
+  end
 end
