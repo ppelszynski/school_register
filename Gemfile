@@ -43,17 +43,15 @@ gem 'bootstrap', '~> 4.3.1'
 
 gem 'jquery-rails'
 
-gem 'aes'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'config'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '~> 1.4.4', require: false
 
 group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'capybara'
-  gem 'capybara-email'
   gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'rspec-rails'

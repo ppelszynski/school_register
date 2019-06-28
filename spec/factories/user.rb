@@ -4,10 +4,8 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
 
-    after(:create, &:confirm)
-
-    transient do
-      school { nil }
+    transient do 
+      school {nil}
     end
 
     trait :admin do
@@ -18,13 +16,6 @@ FactoryBot.define do
       after(:create) do |user, evaluator|
         user.add_role(:school_admin)
         user.add_role(:school_admin, evaluator.school) if evaluator.school
-      end
-    end
-
-    trait :teacher do
-      after(:create) do |user, evaluator|
-        user.add_role(:school_admin)
-        user.add_role(:teacher, evaluator.school) if evaluator.school
       end
     end
   end

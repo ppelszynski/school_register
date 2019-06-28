@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User sign up', type: :feature do
+feature 'User sign in', type: :feature do
   scenario 'correctly login user' do
     visit new_user_registration_path
 
