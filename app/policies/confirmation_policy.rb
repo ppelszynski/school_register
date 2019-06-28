@@ -1,9 +1,9 @@
 class SchoolPolicy < ApplicationPolicy
   def show?
-    user.confirmed?
+    !user.confirmed?
   end
 
-  def create?
-    user.confirmed?
+  def update?
+    !user.confirmed?
   end
 end
