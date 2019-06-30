@@ -1,16 +1,18 @@
-class TeacherCreateForm < Patterns::Form
+class ConfirmationForm < Patterns::Form
   param_key 'user'
 
   attribute :password, String
   attribute :password_confirmation, String
+  attribute :reset_password_token, String
 
   private
 
   def persist
-    create_teacher
+    confirm_teacher
   end
 
-  def create_teacher
+  def confirm_teacher
     resource.update_attributes(attributes)
+    resource.confirm
   end
 end

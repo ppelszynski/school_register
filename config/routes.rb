@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :schools do
     get 'teachers/confirmations/:token', to: 'confirmations#edit'
-    resources :teachers, only: %i[new create index]
+    patch 'teachers/confirmations/:token', to: 'confirmations#update'
+    resources :teachers
   end
 end

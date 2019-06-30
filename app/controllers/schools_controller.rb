@@ -1,16 +1,18 @@
 class SchoolsController < ApplicationController
-  before_action :get_school, only: %i[show edit update destroy]
+  before_action :get_school, only: %i[show update edit destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
   def new
-    @school = School.new
+    @form = SchoolForm.new
   end
 
   def create
-    @school = current_user.schools.new(school_params)
-    authorize @school
-    if @school.save
+    @form = SchoolForm.new(current_user.schools.new, school_params)
+
+    authorize School
+
+    if @form.save
       current_user.add_role(:school_admin, @school)
       flash[:success] = 'School created.'
       redirect_to schools_path
@@ -29,11 +31,16 @@ class SchoolsController < ApplicationController
 
   def show; end
 
-  def edit; end
+  def edit
+    @form = SchoolForm.new(@school)
+  end
 
   def update
     authorize @school
-    if @school.update(school_params)
+
+    @form = SchoolForm.new(@school, school_params)
+
+    if @form.save
       flash[:success] = 'Edited succesfully.'
       redirect_to @school
     else
@@ -65,11 +72,11 @@ class SchoolsController < ApplicationController
                 end
   end
 
-  def school_id
-    params[:id]
+  def school_params
+    params[:school]
   end
 
-  def school_params
-    params.require(:school).permit(:name, :adress, :phone_number, :status)
+  def school_id
+    params[:id]
   end
 end
