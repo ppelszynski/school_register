@@ -18,4 +18,8 @@ class SchoolPolicy < ApplicationPolicy
   def destroy?
     user.is_admin? || user.has_role?(:school_admin, record)
   end
+
+  def create_teacher?
+    user&.is_admin? || user&.has_role(:school_teacher, record)
+  end
 end

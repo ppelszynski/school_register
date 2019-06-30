@@ -1,5 +1,5 @@
 module TeacherMailerHelper
   def encrypt_email(email)
-    email
+    token = "\"#{SymmetricEncryption.encrypt email}\""
   end
 end

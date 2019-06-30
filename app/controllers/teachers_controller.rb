@@ -1,16 +1,18 @@
 class TeachersController < ApplicationController
+  before_action :admin_required
+
   def index
     @teachers = User.with_role(:teacher, school)
   end
 
   def new
-    @form = TeacherCreateForm.new
+    @form = TeacherForm.new
   end
 
   def create
     set_password
 
-    @form = TeacherCreateForm.new(User.new, params[:user])
+    @form = TeacherForm.new(User.new, params[:user])
     teacher = @form.teacher
 
     User.transaction do
@@ -29,6 +31,10 @@ class TeachersController < ApplicationController
   end
 
   private
+
+  def admin_required
+    authorize school
+  end
 
   def set_password
     password = Devise.friendly_token.first 8

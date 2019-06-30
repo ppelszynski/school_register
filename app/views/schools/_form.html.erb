@@ -1,6 +1,6 @@
-<% if @school.errors.any? %>
+<% if @form.errors.any? %>
   <br/>
-    <% @school.errors.full_messages.each do |message| %>
+    <% @form.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
   <% end %>

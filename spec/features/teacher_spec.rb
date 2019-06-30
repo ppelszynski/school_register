@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ActiveJob::TestHelper
 
 feature 'teachers' do
   context 'user is an school admin' do
@@ -28,6 +29,8 @@ feature 'teachers' do
       school = create(:school, admin: admin)
       teacher = create(:user, :teacher, email: 'teacher@email.com', school: school)
 
+      clear_emails
+
       sign_in admin
 
       visit school_teachers_path school
@@ -42,7 +45,11 @@ feature 'teachers' do
       sign_out admin
 
       email = open_email('teacher@email.com')
-      email.click_link('Confirm my account')
+      email.click_link('Confirm your email.')
+
+      fill_in 'Password', with: 'password'
+      fill_in 'Password confirmation', with: 'password'
+      click_on 'Set password'
 
       expect(page).to show_notification('Your email adress has been successfully confirmed.')
     end

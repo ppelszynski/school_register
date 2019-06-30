@@ -1,4 +1,4 @@
-class TeacherCreateForm < Patterns::Form
+class TeacherForm < Patterns::Form
   param_key 'user'
 
   attribute :email, String
@@ -20,7 +20,7 @@ class TeacherCreateForm < Patterns::Form
   end
 
   def create_teacher
-    resource.skip_confirmation!
+    resource.skip_confirmation_notification!
     resource.update_attributes(attributes)
   end
 end
