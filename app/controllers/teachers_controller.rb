@@ -13,7 +13,7 @@ class TeachersController < ApplicationController
     set_password
 
     @form = TeacherForm.new(User.new, params[:user])
-    teacher = @form.teacher
+    teacher = @form.resource
 
     User.transaction do
       if @form.save && SendEmailJob.perform_now(teacher, school)
@@ -21,10 +21,10 @@ class TeachersController < ApplicationController
 
         teacher.add_role(:teacher, school)
 
-        flash[:success] = 'Invitation sent.'
+        flash[:success] = I18n.t 'notifications.invitation_sent'
         redirect_to school_teachers_path
       else
-        flash.now[:error] = 'Invitation not sent.'
+        flash.now[:error] = I18n.t 'notifications.invitation_not_sent'
         render :new
       end
     end

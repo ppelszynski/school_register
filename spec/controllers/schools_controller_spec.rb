@@ -20,7 +20,7 @@ describe SchoolsController, type: :controller do
       it 'cannot edit not own school' do
         user = create(:user)
         neighbours_school = create(:school)
-        params = { id: neighbours_school.id, school: { name: 'My new school', phone_number: '123456789', adress: 'City 1', status: 'public' } }
+        params = { id: neighbours_school.id, school: { name: 'My new school' } }
 
         sign_in user
 

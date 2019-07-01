@@ -6,11 +6,10 @@ class SchoolForm < Patterns::Form
   attribute :phone_number, String
   attribute :status, String
 
-  validates :name, presence: true
+  validates :name, length: { minimum: 2 }
+  validates :status, inclusion: { in: School::STATUSES }
 
-  def teacher
-    resource
-  end
+  attr_reader :resource
 
   private
 
@@ -20,5 +19,6 @@ class SchoolForm < Patterns::Form
 
   def create_school
     resource.update_attributes(attributes)
+    resource.admin.add_role(:school_admin, resource)
   end
 end

@@ -34,3 +34,11 @@ en:
   devise:
     sessions:
       signed_in: "Signed in successfully."
+  notifications:
+    email_confirmed: "Your email adress has been successfully confirmed."
+    invitation_sent: "Invitation sent."
+    invitation_not_sent: "Invitation not sent."
+    not_authorized: "You are not authorized to do this!"
+    school_created: "School created."
+    edit_successful: "Edited succesfully."
+    school_deleted: "School deleted."
