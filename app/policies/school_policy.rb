@@ -8,11 +8,15 @@ class SchoolPolicy < ApplicationPolicy
   end
 
   def index?
-    user.is_admin? || user.has_role?(:school_admin)
+    user.is_admin? || user.has_role?(:school_creator)
   end
 
   def create?
-    user.is_admin? || user.has_role?(:school_admin)
+    user.is_admin? || user.has_role?(:school_creator)
+  end
+
+  def new?
+    user.is_admin? || user.has_role?(:school_creator)
   end
 
   def destroy?

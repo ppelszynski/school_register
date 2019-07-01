@@ -15,6 +15,6 @@ class DecryptEmail < Patterns::Service
   attr_reader :token
 
   def decrypt(token)
-    SymmetricEncryption.decrypt token.sub('"', '')
+    SymmetricEncryption.decrypt token.sub('{}', '/')
   end
 end

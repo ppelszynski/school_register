@@ -9,9 +9,7 @@ class TeacherForm < Patterns::Form
 
   validates :email, presence: true
 
-  def teacher
-    resource
-  end
+  attr_reader :resource
 
   private
 
