@@ -5,6 +5,6 @@ class SendEmailJob < ActiveJob::Base
     @user = user
     @school = school
 
-    TeacherMailer.confirmation_email(@user, @school).deliver_now
+    TeacherMailer.confirmation_email(@user, @school).deliver_later
   end
 end

@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# wywalic i bleedy przetestowacw  schoool feature test
 feature 'school form' do
   context 'wrong data is entered' do
     scenario 'correctly display errors' do
