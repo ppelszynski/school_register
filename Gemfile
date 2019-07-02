@@ -44,6 +44,8 @@ gem 'execjs'
 
 gem 'therubyracer'
 
+gem 'draper'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'bootstrap', '~> 4.3.1'
