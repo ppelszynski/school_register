@@ -18,11 +18,7 @@ class SchoolsController < ApplicationController
   end
 
   def index
-    @schools = if current_user.is_admin?
-                 School.all
-               else
-                 current_user.schools
-               end
+    @schools = policy_scope(School)
   end
 
   def show
