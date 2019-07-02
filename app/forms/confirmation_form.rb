@@ -5,6 +5,8 @@ class ConfirmationForm < Patterns::Form
   attribute :password_confirmation, String
   attribute :reset_password_token, String
 
+  validates :password, length: { minimum: 6 }
+
   private
 
   def persist

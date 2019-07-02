@@ -16,7 +16,8 @@ class TeachersController < ApplicationController
     teacher = @form.resource
 
     User.transaction do
-      if @form.save && SendEmailJob.perform_now(teacher, school)
+      if @form.save
+        TeacherMailer.confirmation_email(teacher, school).deliver
         teacher.confirmed_at = nil
 
         teacher.add_role(:teacher, school)

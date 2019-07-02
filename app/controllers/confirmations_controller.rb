@@ -1,6 +1,5 @@
 class ConfirmationsController < ApplicationController
   def edit
-    sign_out
     authorize teacher, :set_password?
 
     @form = ConfirmationForm.new teacher
@@ -14,6 +13,8 @@ class ConfirmationsController < ApplicationController
     if @form.save
       flash[:success] = t('notifications.email_confirmed')
       redirect_to new_user_session_path
+    else
+      render :edit
     end
   end
 
