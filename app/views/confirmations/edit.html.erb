@@ -1,31 +1,11 @@
 <h1><%= t('.change_your_password') %></h1>
 
-<% if @form.errors.any? %>
-  <br/>
-  <% @form.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-<% end %>
+<%= simple_form_for @form, url: url_for(:controller => 'confirmations',  :action => 'update') do |f| %>
+  <%= f.input :reset_password_token %>
 
-<%= form_for @form, url: url_for(:controller => 'confirmations',  :action => 'update') do |f| %>
-  
-  <%= f.hidden_field :reset_password_token %>
+  <%= f.input :password, autofocus: true, class: 'form-control'  %>
 
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, autofocus: true, class: 'form-control'  %>
+  <%= f.input :password_confirmation, autocomplete: 'off', class: 'form-control'  %>
 
-    <% if @minimum_password_length %>
-      <small class="form-text text-muted"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></small>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'  %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit 'Set password', class: 'btn btn-primary' %>
-  </div>
+  <%= f.button :submit, 'Set password', class: 'btn btn-primary' %>
 <% end %>

@@ -1,25 +1,13 @@
 <h1>Invite user</h1>
 
-<%= form_for @form, url: school_teachers_path do |f| %>
+<%= simple_form_for @form, url: school_teachers_path do |f| %>
+    <%= f.input :email, autofocus: true, autocomplete: 'email' %>
 
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
-  </div>
+    <%= f.input :first_name, class: 'form-control' %>
 
-  <div class="form-group">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name, class: 'form-control' %>
-  </div>
+    <%= f.input :last_name, autocomplete: 'current-password' %>
 
-  <div class="form-group">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name, autocomplete: 'current-password', class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.submit 'Invite user', class: 'btn btn-primary' %>
-  </div>
+    <%= f.button :submit, 'Invite user', class: 'btn btn-primary' %>
 <% end %>
 
 
