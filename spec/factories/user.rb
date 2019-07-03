@@ -2,12 +2,13 @@ FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "user#{n}@example.com" }
     password { 'password' }
-    password_confirmation { 'password' }
+    password_confirmation { password }
 
     after(:create, &:confirm)
 
     transient do
       school { nil }
+      school_class { nil }
     end
 
     trait :admin do
@@ -29,6 +30,16 @@ FactoryBot.define do
       after(:create) do |user, evaluator|
         user.add_role(:teacher, evaluator.school) if evaluator.school
       end
+    end
+
+    trait :candidate do
+      after(:create) { |user| user.add_role(:candidate) }
+    end
+  end
+
+  trait :student do
+    after(:create) do |user, evaluator|
+      user.add_role(:student, evaluator.school_class) if evaluator.school_class
     end
   end
 end

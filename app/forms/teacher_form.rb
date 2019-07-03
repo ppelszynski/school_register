@@ -14,7 +14,14 @@ class TeacherForm < Patterns::Form
   private
 
   def persist
+    attributes[:password] = password
+    attributes[:password_confirmation] = password
+
     resource.skip_confirmation_notification!
     resource.update_attributes(attributes)
+  end
+
+  def password
+    password = Devise.friendly_token.first 8
   end
 end

@@ -7,5 +7,9 @@ Rails.application.routes.draw do
     get 'teachers/confirmations/:token', to: 'confirmations#edit'
     patch 'teachers/confirmations/:token', to: 'confirmations#update'
     resources :teachers
+    resources :school_classes do
+      resources :school_applications
+    end
   end
+  resources :students
 end

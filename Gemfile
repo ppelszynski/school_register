@@ -45,6 +45,10 @@ gem 'symmetric-encryption'
 
 gem 'draper'
 
+gem 'mini_racer'
+
+gem 'draper'
+
 gem 'simple_form'
 
 # Use ActiveStorage variant
@@ -54,6 +58,10 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 
 gem 'aes'
+
+gem 'sidekiq'
+
+gem 'ransack'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

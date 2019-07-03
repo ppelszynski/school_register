@@ -4,7 +4,14 @@
   </button>
   
   <%= link_to 'School register', root_path, :class => "navbar-brand" %>
-  <%= link_to 'Schools', schools_path if policy(:school).index? %>
+  <% if !current_user  %>
+    <%= link_to 'Apply to schools', new_student_path %>
+  <% elsif current_user.is_candidate? %>
+    <%= link_to 'Apply to schools', schools_path%>
+  <% elsif policy(:school).index? %>
+    <%= link_to 'Schools', schools_path%>
+  <% end %>
+  
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">

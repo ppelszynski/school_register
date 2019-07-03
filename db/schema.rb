@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_23_111038) do
+ActiveRecord::Schema.define(version: 2019_07_12_143929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,27 @@ ActiveRecord::Schema.define(version: 2019_06_23_111038) do
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "school_applications", force: :cascade do |t|
+    t.bigint "school_class_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_class_id"], name: "index_school_applications_on_school_class_id"
+    t.index ["user_id"], name: "index_school_applications_on_user_id"
+  end
+
+  create_table "school_classes", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "symbol", default: "", null: false
+    t.boolean "is_full", default: false, null: false
+    t.integer "slots", default: 30, null: false
+    t.bigint "school_id", null: false
+    t.integer "school_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_school_classes_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -64,4 +85,6 @@ ActiveRecord::Schema.define(version: 2019_06_23_111038) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "school_applications", "school_classes"
+  add_foreign_key "school_applications", "users"
 end
