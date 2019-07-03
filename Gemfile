@@ -37,6 +37,10 @@ gem 'rolify'
 
 gem 'pundit'
 
+gem 'execjs'
+
+gem 'therubyracer'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'bootstrap', '~> 4.3.1'
