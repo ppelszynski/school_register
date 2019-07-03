@@ -17,8 +17,6 @@ feature 'teachers' do
 
       click_button 'Invite user'
 
-      binding.pry
-
       expect(page).to have_table_row('teacher@email.com')
       expect(page).to have_table_row('unconfirmed')
     end
