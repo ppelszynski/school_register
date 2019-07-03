@@ -12,6 +12,12 @@ feature 'schools' do
       click_on 'Schools'
       click_on 'Add school'
 
+      fill_in 'Name', with: 'X'
+
+      click_button 'Create school'
+
+      expect(page).to show_field_error
+
       fill_in 'Name', with: 'New School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
@@ -85,7 +91,7 @@ feature 'schools' do
 
       click_link 'Delete'
 
-      accept_alert
+      accept_dialog_box
 
       expect(page).to show_notification('School deleted.')
       expect(page).not_to have_table_row('Falling School')
@@ -184,7 +190,7 @@ feature 'schools' do
 
       click_link 'Delete'
 
-      accept_alert
+      accept_dialog_box
 
       expect(page).to show_notification('School deleted.')
       expect(page).not_to have_table_row('Falling School')

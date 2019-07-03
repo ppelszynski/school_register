@@ -5,8 +5,12 @@
   </tr>
   <% @schools.each do |school| %>
     <tr>
-      <td><%= link_to school.name, school%></td>
-      <td><%= school.adress%></td>
+      <% if current_user.is_candidate? %>
+        <td><%= link_to school.name, school_school_classes_path(school) %></td>
+      <% else %>
+        <td><%= link_to school.name, school_path(school) %></td>
+      <% end %>
+      <td><%= school.adress %></td>
     </tr>
   <% end %>
 </table>

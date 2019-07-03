@@ -1,5 +1,5 @@
 class TeachersController < ApplicationController
-  before_action :admin_required
+  before_action :school_admin_required
 
   def index
     @teachers = User.with_role(:teacher, school)
@@ -10,8 +10,6 @@ class TeachersController < ApplicationController
   end
 
   def create
-    set_password
-
     @form = TeacherForm.new(User.new, params[:user])
     teacher = @form.resource
 
@@ -31,18 +29,11 @@ class TeachersController < ApplicationController
 
   private
 
-  def admin_required
+  def school_admin_required
     authorize school
   end
 
-  def set_password
-    password = Devise.friendly_token.first 8
-
-    params[:user][:password] = password
-    params[:user][:password_confirmation] = password
-  end
-
   def school
-    current_user.schools.find(params[:school_id])
+    @school ||= current_user.schools.find(params[:school_id])
   end
 end
