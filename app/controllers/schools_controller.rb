@@ -17,6 +17,8 @@ class SchoolsController < ApplicationController
   end
 
   def index
+    authorize School
+
     @schools = policy_scope(School)
   end
 

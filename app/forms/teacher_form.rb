@@ -7,7 +7,7 @@ class TeacherForm < Patterns::Form
   attribute :password, String
   attribute :password_confirmation, String
 
-  validates :email, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   attr_reader :resource
 

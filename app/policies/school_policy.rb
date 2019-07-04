@@ -18,7 +18,7 @@ class SchoolPolicy < ApplicationPolicy
   end
 
   def index?
-    user.is_admin? || user.has_role?(:school_creator)
+    user && (user.is_admin? || user.has_role?(:school_creator))
   end
 
   def create?
@@ -32,4 +32,7 @@ class SchoolPolicy < ApplicationPolicy
   def create_teacher?
     user&.is_admin? || user&.has_role(:school_teacher, record)
   end
+
+  alias new? create?
+  alias edit? update?
 end

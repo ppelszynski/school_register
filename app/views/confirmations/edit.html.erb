@@ -1,8 +1,6 @@
 <h1><%= t('.change_your_password') %></h1>
 
 <%= simple_form_for @form, url: url_for(:controller => 'confirmations',  :action => 'update') do |f| %>
-  <%= f.input :reset_password_token %>
-
   <%= f.input :password, autofocus: true, class: 'form-control'  %>
 
   <%= f.input :password_confirmation, autocomplete: 'off', class: 'form-control'  %>
