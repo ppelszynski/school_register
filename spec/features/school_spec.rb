@@ -12,12 +12,6 @@ feature 'schools' do
       click_on 'Schools'
       click_on 'Add school'
 
-      fill_in 'Name', with: 'X'
-
-      click_button 'Create school'
-
-      expect(page).to have_css('li', text: 'Name is too short (minimum is 2 characters)')
-
       fill_in 'Name', with: 'New School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
