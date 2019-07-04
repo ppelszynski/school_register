@@ -2,8 +2,9 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  
   <%= link_to 'School register', root_path, :class => "navbar-brand" %>
-  <%= link_to 'Schools', schools_path if current_user%>
+  <%= link_to 'Schools', schools_path if policy(:school).index? %>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">

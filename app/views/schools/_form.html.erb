@@ -1,32 +1,6 @@
-<% if @school.errors.any? %>
-  <br/>
-    <% @school.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  <% end %>
 
-<div class="field">
-  <%= f.label :name %><br />
-  <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-</div>
-
-<div class="field">
-  <%= f.label :phone_number %><br />
-  <%= f.number_field :phone_number, autofocus: true, autocomplete: "phone_number" %>
-</div>
-
-<div class="field">
-  <%= f.label :adress %><br/>
-  <%= f.text_field :adress, autofocus: true, autocomplete: "adress" %>
-</div>
-
-<div class="field">
-  <%= f.label :status %><br />
-  <%= f.select :status, School::STATUSES %>
-</div>
-
-<br />
-
-<div class="actions">
-  <%= f.submit "#{action} school", class: "btn btn-outline-dark" %>
-</div>
+<%= f.input :name, autofocus: true, autocomplete: "name" %>
+<%= f.input :phone_number, autofocus: true, autocomplete: "phone_number" %>
+<%= f.input :adress, autofocus: true, autocomplete: "adress" %>
+<%= f.input :status, collection: School::STATUSES %>
+<%= f.submit "#{action} school", class: "btn btn-outline-dark" %>

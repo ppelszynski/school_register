@@ -4,7 +4,7 @@ class AssignDefaultRole < Patterns::Service
   end
 
   def call
-    user.add_role(:school_admin)
+    user.add_role(:school_creator)
     user
   end
 

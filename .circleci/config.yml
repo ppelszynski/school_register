@@ -27,7 +27,6 @@ jobs: # a collection of steps
           name: Install bundler
           command: |
             gem install bundler:2.0.2
-
       ## Restore bundle cache
       - restore_cache:
           name: Restoring Bundler Cache
@@ -61,14 +60,15 @@ jobs: # a collection of steps
             sudo dpkg -i google-chrome.deb
             sudo sed -i 's|HERE/chrome"|HERE/chrome" --no-sandbox|g' /opt/google/chrome/google-chrome
             rm google-chrome.deb
-
       # Run rspec in parallel
       - run:
           name: "RSpec"
           command: |
-            bundle exec rspec 
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
       # Save test results for timing analysis
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test_results

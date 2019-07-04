@@ -7,8 +7,9 @@ feature 'schools' do
 
       sign_in admin
 
-      visit schools_path
+      visit root_path
 
+      click_on 'Schools'
       click_on 'Add school'
 
       fill_in 'Name', with: 'New School'
@@ -19,10 +20,11 @@ feature 'schools' do
       click_button 'Create school'
 
       expect(page).to have_table_row('New School')
+      expect(page).to have_table_row('City 1')
       expect(page).to show_notification('School created.')
     end
 
-    scenario 'sees all schools' do
+    scenario 'can see all schools' do
       admin = create(:user, :admin)
       create(:school, name: 'School 1', admin: admin)
       create(:school, name: 'School 2')
@@ -38,11 +40,18 @@ feature 'schools' do
     scenario 'can edit any school' do
       admin = create(:user, :admin)
       user = create(:user)
-      school = create(:school, name: 'New School', admin_id: user.id)
+
+      school = create(:school, name: 'New School', admin: user)
 
       sign_in admin
 
-      visit school_path school
+      visit root_path
+
+      click_on 'Schools'
+
+      expect(page).to have_table_row('New School')
+
+      click_on 'New School'
 
       click_link 'Edit'
 
@@ -54,29 +63,38 @@ feature 'schools' do
       click_button 'Update school'
 
       expect(page).to have_css('h1', text: 'Edited School')
+
+      visit schools_path
     end
 
     scenario 'can delete any school' do
       admin = create(:user, :admin)
       user = create(:user)
 
-      school = create(:school, name: 'Falling School', admin_id: user.id)
+      school = create(:school, name: 'Falling School', admin: user)
 
       sign_in admin
 
-      visit school_path school
+      visit root_path
+
+      click_on 'Schools'
+
+      expect(page).to have_table_row('Falling School')
+
+      click_on 'Falling School'
 
       click_link 'Delete'
 
-      page.driver.browser.switch_to.alert.accept
+      accept_alert
 
-      expect(page).not_to have_css('h1', text: 'Falling School')
+      expect(page).to show_notification('School deleted.')
+      expect(page).not_to have_table_row('Falling School')
     end
   end
 
   context 'user is a school admin' do
     scenario 'can create school' do
-      user = create(:user, :school_admin)
+      user = create(:user, :school_creator)
 
       sign_in user
 
@@ -91,12 +109,13 @@ feature 'schools' do
 
       click_button 'Create school'
 
-      expect(page).to have_table_row('My School')
       expect(page).to show_notification('School created.')
+      expect(page).to have_table_row('My School')
+      expect(page).to have_table_row('City 1')
     end
 
-    scenario 'sees only own schools' do
-      user = create(:user, :school_admin)
+    scenario 'can see only own schools' do
+      user = create(:user, :school_creator)
       create(:school, name: 'School 1', admin: user)
       create(:school, name: 'School 2')
 
@@ -109,7 +128,7 @@ feature 'schools' do
     end
 
     scenario 'can show only own school' do
-      user = create(:user, :school_admin)
+      user = create(:user, :school_creator)
 
       school_1 = create(:school, name: 'Own School', admin: user)
       school_2 = create(:school)
@@ -125,9 +144,10 @@ feature 'schools' do
       expect(page).to show_notification('You are not authorized to do this!')
     end
 
-    scenario 'can edit own school' do
-      user = create(:user, :school_admin)
-      school_1 = create(:school, name: 'New School', admin_id: user.id)
+    scenario 'can edit only own school' do
+      user = create(:user, :school_creator)
+
+      school_1 = create(:school, name: 'New School', admin: user)
       school_2 = create(:school)
 
       sign_in user
@@ -151,19 +171,23 @@ feature 'schools' do
       expect(page).to show_notification('You are not authorized to do this!')
     end
 
-    scenario 'can delete own school' do
-      user = create(:user)
-      school = create(:school, admin: user)
+    scenario 'can delete only own school' do
+      user = create(:user, :school_creator)
+      school = create(:school, name: 'My School', admin: user)
 
       sign_in user
 
-      visit school_path school
+      visit root_path
+
+      click_on 'Schools'
+      click_on 'My School'
 
       click_link 'Delete'
 
-      page.driver.browser.switch_to.alert.accept
+      accept_alert
 
-      expect(page).not_to have_css('h1', text: 'Falling School')
+      expect(page).to show_notification('School deleted.')
+      expect(page).not_to have_table_row('Falling School')
     end
   end
 end

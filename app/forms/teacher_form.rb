@@ -1,4 +1,4 @@
-class TeacherCreateForm < Patterns::Form
+class TeacherForm < Patterns::Form
   param_key 'user'
 
   attribute :email, String
@@ -7,20 +7,14 @@ class TeacherCreateForm < Patterns::Form
   attribute :password, String
   attribute :password_confirmation, String
 
-  validates :email, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  def teacher
-    resource
-  end
+  attr_reader :resource
 
   private
 
   def persist
-    create_teacher
-  end
-
-  def create_teacher
-    resource.skip_confirmation!
+    resource.skip_confirmation_notification!
     resource.update_attributes(attributes)
   end
 end

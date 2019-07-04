@@ -41,6 +41,12 @@ gem 'execjs'
 
 gem 'mini_racer'
 
+gem 'symmetric-encryption'
+
+gem 'draper'
+
+gem 'simple_form'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 gem 'bootstrap', '~> 4.3.1'
@@ -61,6 +67,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
   gem 'selenium-webdriver'
 end
 

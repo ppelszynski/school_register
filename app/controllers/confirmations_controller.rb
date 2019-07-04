@@ -1,20 +1,27 @@
 class ConfirmationsController < ApplicationController
-  before_action :get_teacher
-
   def edit
-    authorize @teacher
+    authorize teacher, :set_password?
+
+    @form = ConfirmationForm.new teacher
   end
 
   def update
-    authorize @teacher
-    @teacher.confirm!
+    authorize teacher, :confirm?
+
+    @form = ConfirmationForm.new(teacher, params[:user])
+
+    if @form.save
+      flash[:success] = t('notifications.email_confirmed')
+      redirect_to new_user_session_path
+    else
+      render :edit
+    end
   end
 
   private
 
-  def get_teacher
-    binding.pry
-    @teacher = User.find_by(email: email)
+  def teacher
+    @teacher ||= User.find_by(email: email)
   end
 
   def email
