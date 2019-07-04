@@ -55,9 +55,9 @@ feature 'schools' do
 
       click_on 'Schools'
 
-      expect(page).to have_table_row('New school')
+      expect(page).to have_table_row('New School')
 
-      click_on 'New school'
+      click_on 'New School'
 
       click_link 'Edit'
 

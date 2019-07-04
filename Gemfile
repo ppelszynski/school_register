@@ -40,6 +40,7 @@ gem 'pundit'
 gem 'execjs'
 
 gem 'mini_racer'
+
 gem 'symmetric-encryption'
 
 # Use ActiveStorage variant

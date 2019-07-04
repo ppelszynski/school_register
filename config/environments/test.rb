@@ -15,7 +15,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   config.active_job.queue_adapter = :test
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true

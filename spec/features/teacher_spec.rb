@@ -53,7 +53,7 @@ feature 'teachers' do
       sign_out school_admin
 
       email = open_email('teacher@email.com')
-      email.click_link('Confirm your email.')
+      visit_email_link(email)
 
       fill_in 'Password', with: 'password'
       fill_in 'Password confirmation', with: 'password'
