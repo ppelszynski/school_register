@@ -15,19 +15,17 @@ class TeachersController < ApplicationController
     @form = TeacherForm.new(User.new, params[:user])
     teacher = @form.resource
 
-    User.transaction do
-      if @form.save
-        TeacherMailer.confirmation_email(teacher, school).deliver
-        teacher.confirmed_at = nil
+    if @form.save
+      TeacherMailer.confirmation_email(teacher, school).deliver
+      teacher.confirmed_at = nil
 
-        teacher.add_role(:teacher, school)
+      teacher.add_role(:teacher, school)
 
-        flash[:success] = I18n.t 'notifications.invitation_sent'
-        redirect_to school_teachers_path
-      else
-        flash.now[:error] = I18n.t 'notifications.invitation_not_sent'
-        render :new
-      end
+      flash[:success] = I18n.t 'notifications.invitation_sent'
+      redirect_to school_teachers_path
+    else
+      flash.now[:error] = I18n.t 'notifications.invitation_not_sent'
+      render :new
     end
   end
 

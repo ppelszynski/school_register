@@ -25,10 +25,6 @@ class SchoolPolicy < ApplicationPolicy
     user.is_admin? || user.has_role?(:school_creator)
   end
 
-  def new?
-    user.is_admin? || user.has_role?(:school_creator)
-  end
-
   def destroy?
     user.is_admin? || user.has_role?(:school_admin, record)
   end

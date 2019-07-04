@@ -10,10 +10,6 @@ class ConfirmationForm < Patterns::Form
   private
 
   def persist
-    confirm_teacher
-  end
-
-  def confirm_teacher
     resource.update_attributes(attributes)
     resource.confirm
   end

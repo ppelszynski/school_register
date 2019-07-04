@@ -14,10 +14,6 @@ class TeacherForm < Patterns::Form
   private
 
   def persist
-    create_teacher
-  end
-
-  def create_teacher
     resource.skip_confirmation_notification!
     resource.update_attributes(attributes)
   end

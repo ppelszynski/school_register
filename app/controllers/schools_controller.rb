@@ -9,7 +9,6 @@ class SchoolsController < ApplicationController
     authorize School
 
     if @form.save
-      # translate
       flash[:success] = I18n.t 'notifications.school_created'
       redirect_to schools_path
     else
