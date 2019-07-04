@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Users::RegistrationsController, type: :controller do
   describe '#CREATE' do
-    it 'assigns school_creator role' do # school_creator role after success registration
+    it 'assigns school_creator role' do
       params = { user: { email: 'user@example.com', password: 'password', password_confirmation: 'password' } }
 
       @request.env['devise.mapping'] = Devise.mappings[:user]

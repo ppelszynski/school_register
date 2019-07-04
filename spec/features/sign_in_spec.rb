@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User sign in', type: :feature do
   scenario 'user can log in' do
-    user = create(:user, email: 'user@example.com', password: 'password', password_confirmation: 'password')
+    user = create(:user, email: 'user@example.com', password: 'password')
 
     visit new_user_session_path
 
