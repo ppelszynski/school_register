@@ -6,7 +6,10 @@ class StudentForm < Patterns::Form
   attribute :first_name, String
   attribute :last_name, String
   attribute :password, String
+  attribute :city, String
   attribute :password_confirmation, String
+
+  validates :email, :city, length: { minimum: 2 }
 
   private
 

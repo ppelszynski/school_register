@@ -5,7 +5,7 @@
   </tr>
   <% @schools.each do |school| %>
     <tr>
-      <td><%= link_to school.name, new_school_application_path(school), data: { confirm: 'Are you sure?' }  %></td>
+      <td><%= link_to school.name, new_school_class_request_path(school), data: { confirm: 'Are you sure?' }  %></td>
       <td><%= school.adress %></td>
     </tr>
   <% end %>

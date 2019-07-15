@@ -1,10 +1,10 @@
-class SchoolApplicationsController < ApplicationController
+class SchoolClassRequestsController < ApplicationController
   def index
-    @applications = school.school_applications
+    @applications = school.school_class_requests
   end
 
   def create
-    application = school_class.school_applications.new(user: current_user)
+    application = school_class.school_class_requests.new(user: current_user)
 
     if application.save
       flash[:success] = I18n.t 'notifications.application_succesful'
@@ -16,16 +16,16 @@ class SchoolApplicationsController < ApplicationController
   end
 
   def update
-    user = User.find(SchoolApplication.find(params[:id]).user_id)
+    user = User.find(SchoolClassRequest.find(params[:id]).user_id)
 
     if slot_available?
       user.add_role(:student, school_class)
       flash[:success] = I18n.t 'notifications.application_confirmed'
-      redirect_to school_school_class_path(school, school_class)
     else
       flash[:error] = I18n.t 'notifications.application_not_confirmed'
-      redirect_to school_school_class_path(school, school_class)
     end
+
+    redirect_to school_school_class_path(school, school_class)
   end
 
   private

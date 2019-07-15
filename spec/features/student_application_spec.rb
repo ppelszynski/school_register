@@ -8,7 +8,7 @@ feature 'school applications' do
       school_class = create(:school_class, school: school, name: 'IT Class', slots: 1)
       create(:user, :student, school_class: school_class)
       candidate = create(:user, :candidate)
-      create(:school_application, user: candidate, school_class: school_class)
+      create(:school_class_request, user: candidate, school_class: school_class)
 
       sign_in school_admin
 

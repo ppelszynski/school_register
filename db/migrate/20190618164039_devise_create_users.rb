@@ -13,6 +13,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :first_name, null: false, default: ''
       t.string :last_name, null: false, default: ''
       t.string :phone_number, null: false, default: ''
+      t.string :last_name, null: false, default: ''
 
       ## Rememberable
       t.datetime :remember_created_at

@@ -12,11 +12,14 @@ class SchoolClassesController < ApplicationController
   def show
     authorize school, policy_class: SchoolClassPolicy
 
-    pending_students = User.where(id: school_class.school_applications.map(&:user_id)).without_role(:student, :any)
-    @q = pending_students.ransack(params[:q])
+    school_class_request
+
+    @pending_students = User.where(id: SchoolClassRequest.all.map(&:user_id)).without_role(:student, :any)
+
+    @q = @pending_students.ransack(params[:q])
     @selected_students = @q.result(distinct: true)
 
-    @students = User.where(id: school_class.school_applications.map(&:user_id))
+    @students = User.where(id: school_class.school_class_requests.map(&:user_id))
   end
 
   def index
@@ -71,7 +74,7 @@ class SchoolClassesController < ApplicationController
     @school ||= School.find(params[:school_id])
   end
 
-  def school_application
-    @school_application ||= SchoolApplication.find_by(school_class_id: school_class.id)
+  def school_class_request
+    @school_class_request ||= SchoolClassRequest.find_by(school_class_id: school_class.id)
   end
 end

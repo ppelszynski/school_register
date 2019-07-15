@@ -1,5 +1,5 @@
 module CapybaraHelper
-  def accept_alert
+  def accept_dialog_box
     page.driver.browser.switch_to.alert.accept
   end
 
@@ -8,5 +8,9 @@ module CapybaraHelper
     link = parts[1]
     link.sub!('localhost:3000', '')
     visit link
+  end
+
+  def confirm_candidate
+    User.with_role(:candidate).last.confirm
   end
 end
