@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     patch 'teachers/confirmations/:token', to: 'confirmations#update'
     resources :teachers
     resources :school_classes do
-      resources :school_applications
+      resources :school_class_requests
     end
   end
   resources :students

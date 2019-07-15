@@ -10,7 +10,7 @@
       <td><%= school_class.symbol %></td>
       <td><%= school_class.decorate.free_slots %></td>
        <% if current_user.is_candidate? %>
-        <td><%= link_to 'Apply', school_school_class_school_applications_path(@school, school_class), method: :post, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Apply', school_school_class_school_class_requests_path(@school, school_class), method: :post, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tr>
   <% end %>

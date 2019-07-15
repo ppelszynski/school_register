@@ -3,15 +3,43 @@
 <%= link_to 'Edit', edit_school_school_class_path %>
 <%= link_to 'Delete', school_school_class_path, method: :delete, data: { confirm: 'Are you sure?' }  %>
 
-<%= search_form_for @q do |f| %>
-  <%= f.label :adress_cont %>
-  <%= f.search_field :adress_cont %>
+<% if @pending_students %>
+  <h2>Pending students</h2>
 
-  <%= f.submit %>
+  <%= search_form_for @q, url: school_school_class_path(@school, @school_class) do |f| %>
+    <%= f.label :last_name %>
+    <%= f.search_field :last_name_cont %>
+
+    <%= f.label :city %>
+    <%= f.collection_select :city_eq, @pending_students, :city, :city, include_blank: true %>
+    
+    <%= f.submit %>
+  <% end %>
+
+  <table class = "table">
+    <tr>
+      <th>First name</th>
+      <th>Last name</th> 
+      <th>City</th>
+      <th>Status</th> 
+    </tr>
+    <% @selected_students.each do |student| %>
+        <tr>
+          <td id="filtered_first_name"><%= student.first_name %></td>
+          <td id="filtered_last_name"><%= student.last_name %></td>
+          <td id="filtered_city"><%= student.city %></td>
+          <td id="filtered_status">
+            <% if student.has_role?(:student, @school_class) %>
+              <%= 'Accepted' %>
+            <% else %>
+              <%= 'Pending' %>
+              <td> <%= link_to 'Confirm', school_school_class_school_class_request_path(@school, @school_class, @school_class_request), method: :put %> </td>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+  </table>
 <% end %>
-
-
-
 
 <h2>Students</h2>
 
@@ -30,7 +58,7 @@
             <%= 'Accepted' %>
           <% else %>
             <%= 'Pending' %>
-            <td> <%= link_to 'Confirm', school_school_class_school_application_path(@school, @school_class, @school_application), method: :put %> </td>
+            <td> <%= link_to 'Confirm', school_school_class_school_class_request_path(@school, @school_class, @school_class_request), method: :put %> </td>
         <% end %>
         </td>
       </tr>

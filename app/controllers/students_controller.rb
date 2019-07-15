@@ -3,6 +3,10 @@ class StudentsController < ApplicationController
     @form = StudentForm.new(User.new)
   end
 
+  def index
+    @students = User.with_role(:candidate)
+  end
+
   def create
     @form = StudentForm.new(User.new, params[:user])
     if @form.save

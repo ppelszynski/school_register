@@ -78,5 +78,45 @@ feature 'school classes' do
       expect(page).to show_notification 'Class deleted.'
       expect(page).not_to have_table_row ['Example Class', 'IIIA']
     end
+
+    scenario 'can search pending students' do
+      school_admin = create(:user, :school_creator)
+      school = create(:school, admin: school_admin)
+      school_class_1 = create(:school_class, name: 'Example Class', school: school)
+      school_class_2 = create(:school_class, name: 'Another School Class')
+      candidate_1 = create(:user, last_name: 'Johnson', city: 'Los Santos')
+      candidate_2 = create(:user, last_name: 'Vercetii', city: 'Vice City')
+      candidate_3 = create(:user, last_name: 'Bellic', city: 'Liberty City')
+
+      create(:school_class_request, user: candidate_1, school_class: school_class_1)
+      create(:school_class_request, user: candidate_2, school_class: school_class_2)
+      create(:school_class_request, user: candidate_3, school_class: school_class_2)
+
+      sign_in school_admin
+
+      visit school_school_class_path school, school_class_1
+
+      expect(page).to have_css '#filtered_last_name', text: 'Johnson'
+      expect(page).to have_css '#filtered_last_name', text: 'Vercetii'
+      expect(page).to have_css '#filtered_last_name', text: 'Bellic'
+
+      fill_in 'q_last_name_cont', with: 'V'
+      click_on 'Search'
+
+      expect(page).to have_css '#filtered_last_name', text: 'Vercetii'
+
+      expect(page).not_to have_css '#filtered_last_name', text: 'Johnson'
+      expect(page).not_to have_css '#filtered_last_name', text: 'Bellic'
+
+      fill_in 'q_last_name_cont', with: ''
+      select 'Liberty City', from: 'q[city_eq]'
+      click_on 'Search'
+
+      expect(page).to have_css '#filtered_last_name', text: 'Bellic'
+      expect(page).to have_css '#filtered_city', text: 'Liberty City'
+
+      expect(page).not_to have_css '#filtered_city', text: 'Los Santos'
+      expect(page).not_to have_css '#filtered_city', text: 'Vice City'
+    end
   end
 end
