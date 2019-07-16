@@ -4,8 +4,8 @@ class CreateSchoolClasses < ActiveRecord::Migration[5.2]
       t.string :name, null: false, default: ''
       t.string :symbol, null: false, default: ''
       t.boolean :is_full, null: false, default: 'false'
-      t.integer :slots, null: false, default: '30'
-      t.integer :slots, null: false, default: '30'
+      t.integer :slots, null: false, default: 30
+      t.integer :slots, null: false, default: 30
       t.references :school, null: false
       t.integer :school_year, default: ''
       t.timestamps

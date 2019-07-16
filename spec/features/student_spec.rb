@@ -13,6 +13,7 @@ feature 'student' do
       fill_in 'Email', with: 'student@email.com'
       fill_in 'First name', with: 'Muhammad'
       fill_in 'Last name', with: 'Ali'
+      fill_in 'City', with: 'NY'
       fill_in 'Phone number', with: '123456789'
       fill_in 'Password', with: 'password'
       fill_in 'Password confirmation', with: 'password'
@@ -44,9 +45,7 @@ feature 'student' do
       visit root_path
 
       click_on 'Apply to schools'
-
       click_on 'Example School'
-
       click_on 'Apply'
 
       accept_dialog_box
