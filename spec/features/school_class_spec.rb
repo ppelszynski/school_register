@@ -96,27 +96,27 @@ feature 'school classes' do
 
       visit school_school_class_path school, school_class_1
 
-      expect(page).to have_css '#filtered_last_name', text: 'Johnson'
-      expect(page).to have_css '#filtered_last_name', text: 'Vercetii'
-      expect(page).to have_css '#filtered_last_name', text: 'Bellic'
+      expect(page).to have_css '.filtered_last_name', text: 'Johnson'
+      expect(page).to have_css '.filtered_last_name', text: 'Vercetii'
+      expect(page).to have_css '.filtered_last_name', text: 'Bellic'
 
       fill_in 'q_last_name_cont', with: 'V'
       click_on 'Search'
 
-      expect(page).to have_css '#filtered_last_name', text: 'Vercetii'
+      expect(page).to have_css '.filtered_last_name', text: 'Vercetii'
 
-      expect(page).not_to have_css '#filtered_last_name', text: 'Johnson'
-      expect(page).not_to have_css '#filtered_last_name', text: 'Bellic'
+      expect(page).not_to have_css '.filtered_last_name', text: 'Johnson'
+      expect(page).not_to have_css '.filtered_last_name', text: 'Bellic'
 
       fill_in 'q_last_name_cont', with: ''
       select 'Liberty City', from: 'q[city_eq]'
       click_on 'Search'
 
-      expect(page).to have_css '#filtered_last_name', text: 'Bellic'
-      expect(page).to have_css '#filtered_city', text: 'Liberty City'
+      expect(page).to have_css '.filtered_last_name', text: 'Bellic'
+      expect(page).to have_css '.filtered_city', text: 'Liberty City'
 
-      expect(page).not_to have_css '#filtered_city', text: 'Los Santos'
-      expect(page).not_to have_css '#filtered_city', text: 'Vice City'
+      expect(page).not_to have_css '.filtered_city', text: 'Los Santos'
+      expect(page).not_to have_css '.filtered_city', text: 'Vice City'
     end
   end
 end

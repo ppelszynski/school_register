@@ -25,15 +25,14 @@
     </tr>
     <% @selected_students.each do |student| %>
         <tr>
-          <td id="filtered_first_name"><%= student.first_name %></td>
-          <td id="filtered_last_name"><%= student.last_name %></td>
-          <td id="filtered_city"><%= student.city %></td>
-          <td id="filtered_status">
+          <td class="filtered_first_name"><%= student.first_name %></td>
+          <td class="filtered_last_name"><%= student.last_name %></td>
+          <td class="filtered_city"><%= student.city %></td>
+          <td class="filtered_status">
             <% if student.has_role?(:student, @school_class) %>
               <%= 'Accepted' %>
             <% else %>
               <%= 'Pending' %>
-              <td> <%= link_to 'Confirm', school_school_class_school_class_request_path(@school, @school_class, @school_class_request), method: :put %> </td>
           <% end %>
           </td>
         </tr>
