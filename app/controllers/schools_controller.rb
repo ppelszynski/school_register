@@ -25,6 +25,9 @@ class SchoolsController < ApplicationController
 
   def show
     authorize school
+
+    @q = school.students.ransack(params[:q])
+    @students = @q.result(distinct: true)
   end
 
   def edit

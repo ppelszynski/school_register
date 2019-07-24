@@ -4,3 +4,35 @@
 <%= link_to 'Edit', edit_school_path %>
 <%= link_to 'Delete', school_path, method: :delete, data: { confirm: 'Are you sure?' }  %>
 <%= link_to 'Classes', school_school_classes_path(@school) %>
+
+
+<div>
+  <%= link_to "All", school_path %>
+  <% ('A'..'Z').each do |letter| %>
+    |
+     <%= link_to letter, "/schools/14?utf8=%E2%9C%93&q%5Blast_name_start%5D=#{letter}&commit=Search" %>
+  <% end %>
+</div>
+
+<table class = "table">
+  <tr>
+    <th>First name</th>
+    <th>Last name</th> 
+    <th>City</th>
+    <th>Status</th> 
+  </tr>
+  <% @students.each do |student| %>
+      <tr>
+        <td class="filtered_first_name"><%= student.first_name %></td>
+        <td class="filtered_last_name"><%= student.last_name %></td>
+        <td class="filtered_city"><%= student.city %></td>
+        <td class="filtered_status">
+          <% if student.has_role?(:student, @school_class) %>
+            <%= 'Accepted' %>
+          <% else %>
+            <%= 'Pending' %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+</table>
