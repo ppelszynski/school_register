@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'school class requests' do
   context 'user is a school admin' do
-    scenario 'can not accept application when class full' do
+    scenario 'can not accept application when class is full' do
       school_admin = create(:user, :school_creator)
       school = create(:school, name: 'Example School', admin: school_admin)
       school_class = create(:school_class, school: school, name: 'IT Class', slots: 1)

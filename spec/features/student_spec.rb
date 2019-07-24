@@ -4,7 +4,7 @@ feature 'student' do
   context 'user is a student' do
     scenario 'must create account before applying' do
       school_admin = create(:user, :school_creator)
-      school = create(:school, name: 'Example school', admin: school_admin)
+      create(:school, name: 'Example school', admin: school_admin)
 
       visit root_path
 
