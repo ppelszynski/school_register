@@ -33,6 +33,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'rails-patterns'
 
+gem 'rack-timeout', '0.3.2'
+
 gem 'rolify'
 
 gem 'pundit'
