@@ -52,6 +52,12 @@ jobs: # a collection of steps
           command: bundle exec rails db:create
 
       - run:
+          name: Symmetric encryption setup
+          command: |
+            gem install symmetric-encryption
+            symmetric-encryption --generate
+
+      - run:
           name: Install Chromedriver latest version
           command: |
             sudo apt-get update
