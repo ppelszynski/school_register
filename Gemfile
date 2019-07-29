@@ -57,6 +57,8 @@ gem 'simple_form'
 # gem 'mini_magick', '~> 4.8'
 gem 'bootstrap', '~> 4.3.1'
 
+gem 'honeybadger', '~> 4.0'
+
 gem 'jquery-rails'
 
 gem 'aes'
