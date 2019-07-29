@@ -22,18 +22,20 @@
     <th>Status</th> 
   </tr>
   <% @records.each do |student| %>
-      <tr>
-        <td class="filtered_first_name"><%= student.first_name %></td>
-        <td class="filtered_last_name"><%= student.last_name %></td>
-        <td class="filtered_city"><%= student.city %></td>
-        <td class="filtered_status">
-          <% if student.has_role?(:student, @school_class) %>
-            <%= 'Accepted' %>
-          <% else %>
-            <%= 'Pending' %>
-        <% end %>
-        </td>
-      </tr>
+      <% cache student do %>      
+        <tr>
+          <td class="filtered_first_name"><%= student.first_name %></td>
+          <td class="filtered_last_name"><%= student.last_name %></td>
+          <td class="filtered_city"><%= student.city %></td>
+          <td class="filtered_status">
+            <% if student.has_role?(:student, @school_class) %>
+              <%= 'Accepted' %>
+            <% else %>
+              <%= 'Pending' %>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
 </table>
 
