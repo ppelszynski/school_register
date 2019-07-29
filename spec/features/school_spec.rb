@@ -12,6 +12,12 @@ feature 'schools' do
       click_on 'Schools'
       click_on 'Add school'
 
+      fill_in 'Name', with: 'X'
+
+      click_button 'Create school'
+
+      expect(page).to show_field_error
+
       fill_in 'Name', with: 'New School'
       fill_in 'Adress', with: 'City 1'
       fill_in 'Phone number', with: '123456789'
@@ -85,7 +91,7 @@ feature 'schools' do
 
       click_link 'Delete'
 
-      accept_alert
+      accept_dialog_box
 
       expect(page).to show_notification('School deleted.')
       expect(page).not_to have_table_row('Falling School')
@@ -171,9 +177,28 @@ feature 'schools' do
       expect(page).to show_notification('You are not authorized to do this!')
     end
 
+    xscenario 'can filter students after showing school' do
+      school_admin = create(:user, :school_admin)
+      school1 = create(:school, admin: school_admin)
+      school_class = create(:school_class, school: school)
+      create(:user, :student, last_name: 'Shakur', school_class: school_class)
+      create(:user, :student, last_name: 'Wallace', school_class: school_class)
+
+      sign_in school_admin
+
+      visit school_path school1
+
+      expect(page).to have_table_row %w[Shakur Wallace]
+
+      click_on 'T'
+
+      expect(page).to have_table_row 'Shakur'
+      expect(page).not_to have_table_row 'Wallace'
+    end
+
     scenario 'can delete only own school' do
       user = create(:user, :school_creator)
-      school = create(:school, name: 'My School', admin: user)
+      create(:school, name: 'My School', admin: user)
 
       sign_in user
 
@@ -184,7 +209,7 @@ feature 'schools' do
 
       click_link 'Delete'
 
-      accept_alert
+      accept_dialog_box
 
       expect(page).to show_notification('School deleted.')
       expect(page).not_to have_table_row('Falling School')

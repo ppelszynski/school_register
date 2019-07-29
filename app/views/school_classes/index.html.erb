@@ -1,0 +1,21 @@
+<table class = "table">
+  <tr>
+    <th>Name</th>
+    <th>Symbol</th>
+    <th>Free slots</th>  
+  </tr>
+  <% @classes.each do |school_class| %>
+    <tr>
+      <td><%= link_to school_class.name, school_school_class_path(@school, school_class) %></td>
+      <td><%= school_class.symbol %></td>
+      <td><%= school_class.decorate.free_slots %></td>
+       <% if current_user.is_candidate? %>
+        <td><%= link_to 'Apply', school_school_class_school_class_requests_path(@school, school_class), method: :post, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<div class="btn btn-outline-dark">
+   <%=link_to 'New class', new_school_school_class_path, class: 'btn'%>
+</div>

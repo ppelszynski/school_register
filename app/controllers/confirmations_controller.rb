@@ -6,10 +6,9 @@ class ConfirmationsController < ApplicationController
   end
 
   def update
-    authorize teacher, :confirm?
+    authorize teacher, :set_password?
 
     @form = ConfirmationForm.new(teacher, params[:user])
-
     if @form.save
       flash[:success] = t('notifications.email_confirmed')
       redirect_to new_user_session_path

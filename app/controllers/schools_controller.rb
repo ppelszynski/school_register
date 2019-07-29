@@ -4,15 +4,16 @@ class SchoolsController < ApplicationController
   end
 
   def create
-    @form = SchoolForm.new(current_user.schools.new, params[:school])
-
     authorize School
+
+    @form = SchoolForm.new(current_user.schools.new, params[:school])
 
     if @form.save
       flash[:success] = I18n.t 'notifications.school_created'
       redirect_to schools_path
     else
       render :new
+      flash[:error] = I18n.t 'notifications.edit_not_successful'
     end
   end
 
@@ -24,6 +25,9 @@ class SchoolsController < ApplicationController
 
   def show
     authorize school
+
+    @q = school.students.ransack(params[:q])
+    @students = @q.result(distinct: true)
   end
 
   def edit

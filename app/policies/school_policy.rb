@@ -1,7 +1,7 @@
 class SchoolPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.is_admin?
+      if user.is_admin? || user.is_candidate?
         scope.all
       else
         scope.where(admin_id: user.id)
@@ -18,11 +18,11 @@ class SchoolPolicy < ApplicationPolicy
   end
 
   def index?
-    user && (user.is_admin? || user.has_role?(:school_creator))
+    user && (user.is_admin? || user.is_candidate? || user.is_school_creator?)
   end
 
   def create?
-    user.is_admin? || user.has_role?(:school_creator)
+    user.is_admin? || user.is_school_creator?
   end
 
   def destroy?
