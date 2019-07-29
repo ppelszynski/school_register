@@ -177,23 +177,45 @@ feature 'schools' do
       expect(page).to show_notification('You are not authorized to do this!')
     end
 
-    xscenario 'can filter students after showing school' do
-      school_admin = create(:user, :school_admin)
-      school1 = create(:school, admin: school_admin)
+    xscenario 'can filter students' do
+      school = create(:school)
+      school_admin = create(:user, :school_admin, school: school)
       school_class = create(:school_class, school: school)
       create(:user, :student, last_name: 'Shakur', school_class: school_class)
       create(:user, :student, last_name: 'Wallace', school_class: school_class)
 
       sign_in school_admin
 
-      visit school_path school1
+      visit school_path school
 
       expect(page).to have_table_row %w[Shakur Wallace]
 
-      click_on 'T'
+      click_on 'S'
 
       expect(page).to have_table_row 'Shakur'
       expect(page).not_to have_table_row 'Wallace'
+    end
+
+    scenario 'can see paginated students' do
+      school_admin = create(:user, :school_admin)
+      school = create(:school, admin: school_admin)
+      school_class = create(:school_class, school: school)
+      create(:user, :student, last_name: 'Bob', school_class: school_class)
+      create(:user, :student, last_name: 'Steve', school_class: school_class)
+      create(:user, :student, last_name: 'Rob', school_class: school_class)
+      create(:user, :student, last_name: 'Clifford', school_class: school_class)
+
+      sign_in school_admin
+
+      visit school_path school
+
+      expect(page).to have_table_row %w[Bob Steve Rob]
+      expect(page).not_to have_table_row 'Clifford'
+
+      click_on 'Next'
+
+      expect(page).to have_table_row 'Clifford'
+      expect(page).not_to have_table_row %w[Bob Steve Rob]
     end
 
     scenario 'can delete only own school' do

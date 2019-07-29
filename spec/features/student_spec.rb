@@ -51,16 +51,6 @@ feature 'student' do
       accept_dialog_box
 
       expect(page).to show_notification('Applied successfully.')
-
-      sign_in school_admin
-
-      visit school_school_class_path school, school_class
-
-      expect(page).to have_table_row ['student@email.com', 'Muhammad', 'Ali', 'Pending']
-
-      click_on 'Confirm'
-
-      expect(page).to have_table_row 'Accepted'
     end
   end
 end

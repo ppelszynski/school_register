@@ -51,6 +51,8 @@ gem 'mini_racer'
 
 gem 'draper'
 
+gem 'pagy'
+
 gem 'simple_form'
 
 # Use ActiveStorage variant

@@ -1,4 +1,6 @@
 class SchoolsController < ApplicationController
+  include Pagy::Backend
+
   def new
     @form = SchoolForm.new
   end
@@ -28,6 +30,7 @@ class SchoolsController < ApplicationController
 
     @q = school.students.ransack(params[:q])
     @students = @q.result(distinct: true)
+    @pagy, @records = pagy(@students)
   end
 
   def edit

@@ -22,6 +22,7 @@
       <th>Last name</th> 
       <th>City</th>
       <th>Status</th> 
+      <th></th> 
     </tr>
     <% @selected_students.each do |student| %>
         <tr>
@@ -33,6 +34,7 @@
               <%= 'Accepted' %>
             <% else %>
               <%= 'Pending' %>
+              <td> <%= link_to 'Confirm', school_school_class_school_class_request_path(@school, @school_class, @school_class_request), method: :put %> </td>
           <% end %>
           </td>
         </tr>
