@@ -11,6 +11,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { address: '127.0.0.1', port: 1025 }
 
+  config.active_storage.service = :local
+
   # Do not eager load code on boot.
   config.eager_load = false
 

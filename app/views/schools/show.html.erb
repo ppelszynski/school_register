@@ -1,10 +1,11 @@
 <h1><%= @school.name %></h1>
 
+<%= image_tag(@school.photo) %>
+
 <%= link_to 'Teachers', school_teachers_path(@school) %>
 <%= link_to 'Edit', edit_school_path %>
 <%= link_to 'Delete', school_path, method: :delete, data: { confirm: 'Are you sure?' }  %>
 <%= link_to 'Classes', school_school_classes_path(@school) %>
-
 
 <div>
   <%= link_to "All", school_path %>

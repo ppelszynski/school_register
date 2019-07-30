@@ -95,7 +95,7 @@
 
 # Instance variables
 # See https://ddnexus.github.io/pagy/api/pagy#instance-variables
-Pagy::VARS[:items] = 3
+Pagy::VARS[:items] = 1
 
 # Other Variables
 # See https://ddnexus.github.io/pagy/api/pagy#other-variables

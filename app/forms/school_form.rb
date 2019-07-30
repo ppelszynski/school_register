@@ -19,6 +19,5 @@ class SchoolForm < Patterns::Form
 
   def create_school
     resource.update_attributes(attributes)
-    resource.admin.add_role(:school_admin, resource)
   end
 end

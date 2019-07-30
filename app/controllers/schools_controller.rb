@@ -2,13 +2,15 @@ class SchoolsController < ApplicationController
   include Pagy::Backend
 
   def new
-    @form = SchoolForm.new
+    authorize School
+    @form = SchoolForm.new(School.new)
   end
 
   def create
     authorize School
 
-    @form = SchoolForm.new(current_user.schools.new, params[:school])
+    @form = SchoolForm.new(current_user.schools.new, params[:school].except(:photo))
+    @form.resource.photo.attach params[:school][:photo]
 
     if @form.save
       flash[:success] = I18n.t 'notifications.school_created'
